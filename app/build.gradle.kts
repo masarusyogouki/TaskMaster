@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -87,4 +88,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     testImplementation("androidx.room:room-testing:$roomVersion")
     implementation("androidx.room:room-paging:$roomVersion")
+
+    // hilt
+    implementation("com.google.dagger:hilt-android:2.50")
+    ksp("com.google.dagger:hilt-android-compiler:2.50")
 }
