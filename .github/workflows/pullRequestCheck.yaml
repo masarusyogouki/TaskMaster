@@ -29,15 +29,24 @@ jobs:
         uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest
+          # gradlewファイルに実行権限を付与
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
       # android lintを実行
       - name: Android Lint
         id: android-lint
         run: ./gradlew lint
+
+      # SARIFファイルの場所を確認(デバック用)
+      - name: Find SARIF files
+        run: find . -name "*lint*.sarif"
+
       # report
       - name: Comment PR by reviewdog
         if: always()
         run: |
-          find ./*/build/reports/android-lint/lintResults.sarif \
+          find . -name "*lint*.sarif" \
             -type f \
             -exec sh -c "cat {} | reviewdog -f=sarif -reporter=github-pr-review" \;
         env:
