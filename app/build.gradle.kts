@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -77,4 +78,13 @@ dependencies {
 
     // lint
     lintChecks("com.slack.lint.compose:compose-lint-checks:1.3.1")
+
+    // room
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    testImplementation("androidx.room:room-testing:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
 }
