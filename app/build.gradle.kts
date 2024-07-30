@@ -80,7 +80,7 @@ dependencies {
     lintChecks("com.slack.lint.compose:compose-lint-checks:1.3.1")
 
     // room
-    val roomVersion = "2.6.1"
+    val roomVersion = "2.5.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
@@ -89,7 +89,7 @@ dependencies {
     implementation("androidx.room:room-paging:$roomVersion")
 
     // hilt
-    val hiltVersion = "2.50"
+    val hiltVersion = "2.48"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     ksp("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
