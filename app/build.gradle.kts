@@ -101,14 +101,4 @@ dependencies {
 
     // navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
-
-    // test
-    val androidXTestVersion = "1.5.0"
-    val mockitoVersion = "4.10.19"
-    val mockitoKotlinVersion = "4.1.0"
-    val mockkVersion = "1.13.5"
-    testImplementation("androidx.test:core:$androidXTestVersion")
-    testImplementation("org.mockito:mockito-core:$mockitoVersion")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
-    testImplementation("io.mockk:mockk:$mockkVersion")
 }
