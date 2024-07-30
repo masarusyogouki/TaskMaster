@@ -8,5 +8,5 @@ import com.example.taskmaster.model.Task
 @Dao
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addTask(task: Task): Int
+    suspend fun addTask(task: Task): Long
 }
