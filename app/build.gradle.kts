@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
 }
 
 android {
@@ -25,7 +26,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -47,6 +48,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    lint {
+        sarifOutput = File(project.buildDir, "reports/android-lint/lintResults.sarif")
+        textOutput = File(project.buildDir, "reports/android-lint/lintResults.txt")
+        htmlOutput = File(project.buildDir, "reports/android-lint/lintResults.html")
+        xmlReport = false
+    }
 }
 
 dependencies {
@@ -66,4 +74,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // lint
+    lintChecks("com.slack.lint.compose:compose-lint-checks:1.3.1")
 }
