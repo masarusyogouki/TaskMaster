@@ -5,7 +5,7 @@ TaskMasterは
 を目的として開発するToDoアプリ
 
 # サービスの概要
-TaskMasterは、TDD(テスト駆動開発)、Hilt、MVVMといった技術を学び、練習するためのToDoアプリです。
+TaskMasterは、Room, Hilt, MVVM, Jetpack Composeといった技術を学び、練習するためのToDoアプリです。
 
 # 基本機能の説明
 - **タスクの追加**: タイトル、期限日、優先度を入力して新しいタスクを作成
@@ -37,4 +37,3 @@ TaskMasterは、TDD(テスト駆動開発)、Hilt、MVVMといった技術を学
 - **Room (KSP)**
 - **Hilt**
 - **MVVMアーキテクチャ**
-- **TDD（テスト駆動開発）**
