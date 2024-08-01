@@ -11,4 +11,6 @@ class TaskRepositoryImpl
         private val taskDao: TaskDao,
     ) : TaskRepository {
         override suspend fun addTask(task: Task): Long = taskDao.addTask(task)
+
+        override suspend fun getAllTasks(): List<Task> = taskDao.getAllTasks()
     }
