@@ -23,6 +23,10 @@ class HomeViewModel
         private val title
             get() = uiState.value.title
 
+        init {
+            getAllTasks()
+        }
+
         fun onTitleChange(newValue: String) {
             uiState.value = uiState.value.copy(title = newValue)
         }
@@ -39,6 +43,14 @@ class HomeViewModel
                 taskRepository.addTask(newTask)
                 onTitleChange("")
                 Log.d("HomeViewModel", "Task added: $newTask")
+            }
+            getAllTasks()
+        }
+
+        private fun getAllTasks() {
+            viewModelScope.launch {
+                taskRepository.getAllTasks()
+                Log.d("HomeViewModel", "get Tasks")
             }
         }
     }
