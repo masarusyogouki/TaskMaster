@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.taskmaster.model.Task
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
@@ -12,5 +13,5 @@ interface TaskDao {
     suspend fun addTask(task: Task): Long
 
     @Query("SELECT * FROM tasks")
-    suspend fun getAllTasks(): List<Task>
+    suspend fun getAllTasksFlow(): Flow<List<Task>>
 }
