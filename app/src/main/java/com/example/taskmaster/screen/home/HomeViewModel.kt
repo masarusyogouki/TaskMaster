@@ -20,11 +20,8 @@ class HomeViewModel
         var uiState = mutableStateOf(HomeUiState())
             private set
 
-        private val title
-            get() = uiState.value.title
-
         init {
-            getAllTasks()
+            loadTasks()
         }
 
         fun onTitleChange(newValue: String) {
@@ -44,12 +41,11 @@ class HomeViewModel
                 onTitleChange("")
                 Log.d("HomeViewModel", "Task added: $newTask")
             }
-            getAllTasks()
+            loadTasks()
         }
 
-        private fun getAllTasks() {
+        private fun loadTasks() {
             viewModelScope.launch {
-                taskRepository.getAllTasks()
                 Log.d("HomeViewModel", "get Tasks")
             }
         }
