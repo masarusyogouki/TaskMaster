@@ -2,7 +2,9 @@ package com.example.taskmaster.screen.home
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
@@ -20,9 +22,7 @@ class HomeViewModel
         var uiState = mutableStateOf(HomeUiState())
             private set
 
-        init {
-            loadTasks()
-        }
+        val tasks: LiveData<List<Task>> = taskRepository.tasks.asLiveData()
 
         fun onTitleChange(newValue: String) {
             uiState.value = uiState.value.copy(title = newValue)
@@ -40,13 +40,6 @@ class HomeViewModel
                 taskRepository.addTask(newTask)
                 onTitleChange("")
                 Log.d("HomeViewModel", "Task added: $newTask")
-            }
-            loadTasks()
-        }
-
-        private fun loadTasks() {
-            viewModelScope.launch {
-                Log.d("HomeViewModel", "get Tasks")
             }
         }
     }
