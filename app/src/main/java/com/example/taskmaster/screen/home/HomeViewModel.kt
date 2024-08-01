@@ -20,6 +20,10 @@ class HomeViewModel
         var uiState = mutableStateOf(HomeUiState())
             private set
 
+        init {
+            loadTasks()
+        }
+
         fun onTitleChange(newValue: String) {
             uiState.value = uiState.value.copy(title = newValue)
         }
@@ -36,6 +40,15 @@ class HomeViewModel
                 taskRepository.addTask(newTask)
                 onTitleChange("")
                 Log.d("HomeViewModel", "Task added: $newTask")
+                loadTasks()
+            }
+        }
+
+        private fun loadTasks() {
+            viewModelScope.launch {
+                taskRepository.getTasks().collect { taskList ->
+                    uiState.value = uiState.value.copy(tasks = taskList)
+                }
             }
         }
     }
