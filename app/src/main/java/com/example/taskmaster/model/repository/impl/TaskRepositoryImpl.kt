@@ -14,4 +14,9 @@ class TaskRepositoryImpl
         override suspend fun addTask(task: Task): Long = taskDao.addTask(task)
 
         override fun getTasks(): Flow<List<Task>> = taskDao.getALLTasks()
+
+        override suspend fun updateTaskCompleted(
+            taskId: Long,
+            isCompleted: Boolean,
+        ) = taskDao.updateTaskCompleted(taskId, isCompleted)
     }
