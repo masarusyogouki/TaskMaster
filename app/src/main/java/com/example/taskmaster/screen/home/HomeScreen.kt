@@ -26,6 +26,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         uiState = uiState,
         onAddClick = viewModel::addTask,
         onTitleChange = viewModel::onTitleChange,
+        onTaskCompletedChange = viewModel::onUpdateTaskCompleted,
     )
 }
 
@@ -34,8 +35,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 fun HomeScreenContent(
     uiState: HomeUiState,
     onTitleChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
     onAddClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    onTaskCompletedChange: (Long, Boolean) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -59,6 +61,9 @@ fun HomeScreenContent(
                             isCompleted = task.isCompleted,
                             title = task.title,
                             priority = task.priority,
+                            onCompletedChange = { isCompleted ->
+                                onTaskCompletedChange(task.id, isCompleted)
+                            },
                         )
                     }
                 }

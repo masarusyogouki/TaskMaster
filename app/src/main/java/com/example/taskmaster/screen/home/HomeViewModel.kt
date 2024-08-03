@@ -28,6 +28,16 @@ class HomeViewModel
             uiState.value = uiState.value.copy(title = newValue)
         }
 
+        fun onUpdateTaskCompleted(
+            taskId: Long,
+            isCompleted: Boolean,
+        ) {
+            viewModelScope.launch {
+                taskRepository.updateTaskCompleted(taskId, isCompleted)
+                Log.d("HomeViewModel", "Task updated: $taskId, $isCompleted")
+            }
+        }
+
         fun addTask(title: String) {
             viewModelScope.launch {
                 val newTask =
