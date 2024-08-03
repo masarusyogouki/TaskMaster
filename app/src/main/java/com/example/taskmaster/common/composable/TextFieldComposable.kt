@@ -1,5 +1,6 @@
 package com.example.taskmaster.common.composable
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,7 +26,8 @@ fun NewTaskField(
         modifier =
             modifier
                 .padding(16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .background(Color.White),
         value = value,
         onValueChange = { onNewValue(it) },
         placeholder = { Text(text = "新しいタスクを追加") },
