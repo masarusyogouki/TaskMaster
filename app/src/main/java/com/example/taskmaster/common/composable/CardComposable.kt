@@ -31,7 +31,7 @@ fun TaskCard(
         modifier =
             modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(2.dp),
     ) {
         Row(
             modifier =
@@ -54,7 +54,10 @@ fun TaskCard(
 
             Text(
                 text = title,
-                modifier = Modifier.weight(1f),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .size(24.dp),
             )
 
             Icon(
