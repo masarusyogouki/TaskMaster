@@ -1,5 +1,6 @@
 package com.example.taskmaster.common.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +26,7 @@ fun TaskCard(
     isCompleted: Boolean,
     title: String,
     priority: Priority,
+    onCompletedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -47,7 +49,10 @@ fun TaskCard(
                         painterResource(id = R.drawable.radio_button_unchecked)
                     },
                 contentDescription = "isCompleted",
-                modifier = Modifier.size(24.dp),
+                modifier =
+                    Modifier
+                        .size(24.dp)
+                        .clickable { onCompletedChange(!isCompleted) },
             )
 
             Spacer(modifier = Modifier.width(8.dp))

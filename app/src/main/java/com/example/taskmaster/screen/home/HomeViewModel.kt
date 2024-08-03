@@ -34,7 +34,7 @@ class HomeViewModel
         ) {
             viewModelScope.launch {
                 taskRepository.updateTaskCompleted(taskId, isCompleted)
-                loadTasks()
+                Log.d("HomeViewModel", "Task updated: $taskId, $isCompleted")
             }
         }
 
