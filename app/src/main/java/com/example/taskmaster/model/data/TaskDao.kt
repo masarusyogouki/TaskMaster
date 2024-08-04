@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
 import kotlinx.coroutines.flow.Flow
 
@@ -19,5 +20,11 @@ interface TaskDao {
     suspend fun updateTaskCompleted(
         taskId: Long,
         isCompleted: Boolean,
+    )
+
+    @Query("UPDATE tasks SET priority = :priority WHERE id = :taskId")
+    suspend fun updateTaskPriority(
+        taskId: Long,
+        priority: Priority,
     )
 }
