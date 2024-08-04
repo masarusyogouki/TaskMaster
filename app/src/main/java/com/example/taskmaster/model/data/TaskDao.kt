@@ -16,15 +16,21 @@ interface TaskDao {
     @Query("SELECT * FROM tasks")
     fun getALLTasks(): Flow<List<Task>>
 
-    @Query("UPDATE tasks SET isCompleted = :isCompleted WHERE id = :taskId")
-    suspend fun updateTaskCompleted(
+    @Query("UPDATE tasks SET title = :title WHERE id = :taskId")
+    suspend fun updateTaskTitle(
         taskId: Long,
-        isCompleted: Boolean,
+        title: String,
     )
 
     @Query("UPDATE tasks SET priority = :priority WHERE id = :taskId")
     suspend fun updateTaskPriority(
         taskId: Long,
         priority: Priority,
+    )
+
+    @Query("UPDATE tasks SET isCompleted = :isCompleted WHERE id = :taskId")
+    suspend fun updateTaskCompleted(
+        taskId: Long,
+        isCompleted: Boolean,
     )
 }
