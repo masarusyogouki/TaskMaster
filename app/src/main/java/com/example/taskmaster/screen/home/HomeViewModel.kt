@@ -38,6 +38,16 @@ class HomeViewModel
             }
         }
 
+        fun onUpdateTaskPriority(
+            taskId: Long,
+            priority: Priority,
+        ) {
+            viewModelScope.launch {
+                taskRepository.updateTaskPriority(taskId, priority)
+                Log.d("HomeViewModel", "Task updated: $taskId, $priority")
+            }
+        }
+
         fun addTask(title: String) {
             viewModelScope.launch {
                 val newTask =

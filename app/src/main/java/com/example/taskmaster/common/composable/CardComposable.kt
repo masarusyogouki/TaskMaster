@@ -27,6 +27,7 @@ fun TaskCard(
     title: String,
     priority: Priority,
     onCompletedChange: (Boolean) -> Unit,
+    onPriorityChange: (Priority) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -79,7 +80,16 @@ fun TaskCard(
                     } else {
                         Color.Yellow
                     },
-                modifier = Modifier.size(24.dp),
+                modifier =
+                    Modifier
+                        .size(24.dp)
+                        .clickable {
+                            if (priority == Priority.None) {
+                                onPriorityChange(Priority.LOW)
+                            } else {
+                                onPriorityChange(Priority.None)
+                            }
+                        },
             )
         }
     }
