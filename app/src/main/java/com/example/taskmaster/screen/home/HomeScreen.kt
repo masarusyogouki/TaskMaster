@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.taskmaster.common.composable.NewTaskField
 import com.example.taskmaster.common.composable.TaskCard
+import com.example.taskmaster.model.Priority
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
@@ -27,6 +28,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         onAddClick = viewModel::addTask,
         onTitleChange = viewModel::onTitleChange,
         onTaskCompletedChange = viewModel::onUpdateTaskCompleted,
+        onTaskPriorityChange = viewModel::onUpdateTaskPriority,
     )
 }
 
@@ -36,8 +38,9 @@ fun HomeScreenContent(
     uiState: HomeUiState,
     onTitleChange: (String) -> Unit,
     onAddClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
     onTaskCompletedChange: (Long, Boolean) -> Unit,
+    onTaskPriorityChange: (Long, Priority) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -63,6 +66,9 @@ fun HomeScreenContent(
                             priority = task.priority,
                             onCompletedChange = { isCompleted ->
                                 onTaskCompletedChange(task.id, isCompleted)
+                            },
+                            onPriorityChange = { priority ->
+                                onTaskPriorityChange(task.id, priority)
                             },
                         )
                     }
