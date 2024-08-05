@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.taskmaster.screen.edit.EditScreen
 import com.example.taskmaster.screen.home.HomeScreen
 
 @Composable
@@ -30,7 +31,13 @@ fun TodoNavGraph(
             modifier = Modifier.padding(innerPadding),
         ) {
             composable(Destinations.HOME_SCREEN) {
-                HomeScreen()
+                HomeScreen(navController)
+            }
+
+            composable(
+                route = Destinations.EDIT_SCREEN,
+            ) {
+                EditScreen()
             }
         }
     }
@@ -38,4 +45,5 @@ fun TodoNavGraph(
 
 object Destinations {
     const val HOME_SCREEN = "home"
+    const val EDIT_SCREEN = "edit"
 }

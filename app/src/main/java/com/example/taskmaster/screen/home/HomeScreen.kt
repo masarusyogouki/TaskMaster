@@ -12,16 +12,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.taskmaster.TodoNavigationActions
 import com.example.taskmaster.common.composable.NewTaskField
 import com.example.taskmaster.common.composable.TaskCard
 import com.example.taskmaster.model.Priority
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    navController: NavHostController,
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
     val uiState = viewModel.uiState.value
+    val navActions = remember(navController) { TodoNavigationActions(navController) }
 
     HomeScreenContent(
         uiState = uiState,
@@ -29,6 +36,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         onTitleChange = viewModel::onTitleChange,
         onTaskCompletedChange = viewModel::onUpdateTaskCompleted,
         onTaskPriorityChange = viewModel::onUpdateTaskPriority,
+        onNavEditClick = { navActions.navigateToEditScreen() },
     )
 }
 
@@ -40,6 +48,7 @@ fun HomeScreenContent(
     onAddClick: (String) -> Unit,
     onTaskCompletedChange: (Long, Boolean) -> Unit,
     onTaskPriorityChange: (Long, Priority) -> Unit,
+    onNavEditClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -57,7 +66,10 @@ fun HomeScreenContent(
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(
-                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
                 ) {
                     items(uiState.tasks) { task ->
                         TaskCard(
@@ -69,6 +81,9 @@ fun HomeScreenContent(
                             },
                             onPriorityChange = { priority ->
                                 onTaskPriorityChange(task.id, priority)
+                            },
+                            onNavEditClick = {
+                                onNavEditClick()
                             },
                         )
                     }

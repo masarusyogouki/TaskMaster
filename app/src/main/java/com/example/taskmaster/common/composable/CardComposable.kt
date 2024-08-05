@@ -28,13 +28,15 @@ fun TaskCard(
     priority: Priority,
     onCompletedChange: (Boolean) -> Unit,
     onPriorityChange: (Priority) -> Unit,
+    onNavEditClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier =
             modifier
                 .fillMaxWidth()
-                .padding(2.dp),
+                .padding(2.dp)
+                .clickable { onNavEditClick() },
     ) {
         Row(
             modifier =
