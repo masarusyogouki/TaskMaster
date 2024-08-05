@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface TaskDao {
@@ -20,6 +21,12 @@ interface TaskDao {
     suspend fun updateTaskTitle(
         taskId: Long,
         title: String,
+    )
+
+    @Query("UPDATE tasks SET dueDate = :dueDate WHERE id = :taskId")
+    suspend fun updateTaskDueDate(
+        taskId: Long,
+        dueDate: LocalDate,
     )
 
     @Query("UPDATE tasks SET priority = :priority WHERE id = :taskId")
