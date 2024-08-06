@@ -17,6 +17,8 @@ class TaskRepositoryImpl
 
         override fun getTasks(): Flow<List<Task>> = taskDao.getALLTasks()
 
+        override fun getTaskById(taskId: Long): Flow<Task?> = taskDao.getTaskById(taskId)
+
         override suspend fun updateTaskTitle(
             taskId: Long,
             title: String,

@@ -10,6 +10,8 @@ interface TaskRepository {
 
     fun getTasks(): Flow<List<Task>>
 
+    fun getTaskById(taskId: Long): Flow<Task?>
+
     suspend fun updateTaskTitle(
         taskId: Long,
         title: String,
