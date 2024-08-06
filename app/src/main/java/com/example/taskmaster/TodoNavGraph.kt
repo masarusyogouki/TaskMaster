@@ -7,9 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.taskmaster.screen.edit.EditScreen
 import com.example.taskmaster.screen.home.HomeScreen
 
@@ -18,9 +20,13 @@ fun TodoNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = Destinations.HOME_SCREEN,
+    navActions: TodoNavigationActions =
+        remember(navController) {
+            TodoNavigationActions(
+                navController,
+            )
+        },
 ) {
-    val navActions = remember(navController) { TodoNavigationActions(navController) }
-
     Scaffold(
         modifier = modifier,
         bottomBar = { Text(text = "bottombar") },
@@ -31,13 +37,18 @@ fun TodoNavGraph(
             modifier = Modifier.padding(innerPadding),
         ) {
             composable(Destinations.HOME_SCREEN) {
-                HomeScreen(navController)
+                HomeScreen(
+                    onNavEditClick = navActions::navigateToEditScreen,
+                )
             }
 
             composable(
-                route = Destinations.EDIT_SCREEN,
-            ) {
-                EditScreen()
+                route = "${Destinations.EDIT_SCREEN}/{taskId}",
+                arguments = listOf(navArgument("taskId") { type = NavType.LongType }),
+            ) { backStackEntry ->
+                val taskId = backStackEntry.arguments?.getLong("taskId")
+                requireNotNull(taskId) { "Task ID is required" }
+                EditScreen(taskId)
             }
         }
     }

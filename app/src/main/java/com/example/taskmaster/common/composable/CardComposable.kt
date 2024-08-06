@@ -20,15 +20,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.R
 import com.example.taskmaster.model.Priority
+import com.example.taskmaster.model.Task
 
 @Composable
 fun TaskCard(
-    isCompleted: Boolean,
-    title: String,
-    priority: Priority,
+    task: Task,
     onCompletedChange: (Boolean) -> Unit,
     onPriorityChange: (Priority) -> Unit,
-    onNavEditClick: () -> Unit,
+    onNavEditClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -36,7 +35,7 @@ fun TaskCard(
             modifier
                 .fillMaxWidth()
                 .padding(2.dp)
-                .clickable { onNavEditClick() },
+                .clickable { onNavEditClick(task) },
     ) {
         Row(
             modifier =
@@ -46,7 +45,7 @@ fun TaskCard(
         ) {
             Icon(
                 painter =
-                    if (isCompleted) {
+                    if (task.isCompleted) {
                         painterResource(id = R.drawable.expand_circle_down)
                     } else {
                         painterResource(id = R.drawable.radio_button_unchecked)
@@ -55,13 +54,13 @@ fun TaskCard(
                 modifier =
                     Modifier
                         .size(24.dp)
-                        .clickable { onCompletedChange(!isCompleted) },
+                        .clickable { onCompletedChange(!task.isCompleted) },
             )
 
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = title,
+                text = task.title,
                 modifier =
                     Modifier
                         .weight(1f)
@@ -70,14 +69,14 @@ fun TaskCard(
 
             Icon(
                 imageVector =
-                    if (priority == Priority.None) {
+                    if (task.priority == Priority.None) {
                         Icons.Sharp.Star
                     } else {
                         Icons.Filled.Star
                     },
                 contentDescription = "priority",
                 tint =
-                    if (priority == Priority.None) {
+                    if (task.priority == Priority.None) {
                         Color.Gray.copy(alpha = 0.3f)
                     } else {
                         Color.Yellow
@@ -86,7 +85,7 @@ fun TaskCard(
                     Modifier
                         .size(24.dp)
                         .clickable {
-                            if (priority == Priority.None) {
+                            if (task.priority == Priority.None) {
                                 onPriorityChange(Priority.LOW)
                             } else {
                                 onPriorityChange(Priority.None)

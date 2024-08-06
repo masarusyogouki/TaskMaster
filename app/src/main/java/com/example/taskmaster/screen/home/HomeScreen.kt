@@ -12,23 +12,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import com.example.taskmaster.TodoNavigationActions
 import com.example.taskmaster.common.composable.NewTaskField
 import com.example.taskmaster.common.composable.TaskCard
 import com.example.taskmaster.model.Priority
+import com.example.taskmaster.model.Task
 
 @Composable
 fun HomeScreen(
-    navController: NavHostController,
+    onNavEditClick: (Task) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.uiState.value
-    val navActions = remember(navController) { TodoNavigationActions(navController) }
 
     HomeScreenContent(
         uiState = uiState,
@@ -36,7 +33,7 @@ fun HomeScreen(
         onTitleChange = viewModel::onTitleChange,
         onTaskCompletedChange = viewModel::onUpdateTaskCompleted,
         onTaskPriorityChange = viewModel::onUpdateTaskPriority,
-        onNavEditClick = { navActions.navigateToEditScreen() },
+        onNavEditClick = onNavEditClick,
     )
 }
 
@@ -48,7 +45,7 @@ fun HomeScreenContent(
     onAddClick: (String) -> Unit,
     onTaskCompletedChange: (Long, Boolean) -> Unit,
     onTaskPriorityChange: (Long, Priority) -> Unit,
-    onNavEditClick: () -> Unit,
+    onNavEditClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -73,18 +70,14 @@ fun HomeScreenContent(
                 ) {
                     items(uiState.tasks) { task ->
                         TaskCard(
-                            isCompleted = task.isCompleted,
-                            title = task.title,
-                            priority = task.priority,
+                            task = task,
                             onCompletedChange = { isCompleted ->
                                 onTaskCompletedChange(task.id, isCompleted)
                             },
                             onPriorityChange = { priority ->
                                 onTaskPriorityChange(task.id, priority)
                             },
-                            onNavEditClick = {
-                                onNavEditClick()
-                            },
+                            onNavEditClick = onNavEditClick,
                         )
                     }
                 }

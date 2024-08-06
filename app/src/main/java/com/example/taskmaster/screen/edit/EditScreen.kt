@@ -1,17 +1,24 @@
 package com.example.taskmaster.screen.edit
 
-import android.annotation.SuppressLint
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun EditScreen(viewModel: EditViewModel = hiltViewModel()) {
-    EditScreenContent()
+fun EditScreen(
+    taskId: Long,
+    viewModel: EditViewModel = hiltViewModel(),
+) {
+    EditScreenContent(
+        taskId = taskId,
+    )
 }
 
-@SuppressLint("ComposeModifierMissing")
 @Composable
-fun EditScreenContent() {
-    Text("Edit Screen")
+fun EditScreenContent(
+    taskId: Long,
+    modifier: Modifier = Modifier,
+) {
+    Text("ID: $taskId")
 }
