@@ -38,6 +38,13 @@ class HomeViewModel
             }
         }
 
+        fun onDeleteTask(task: Task) {
+            viewModelScope.launch {
+                taskRepository.deleteTask(task)
+                Log.d("HomeViewModel", "Task deleted: $task")
+            }
+        }
+
         fun addTask(title: String) {
             viewModelScope.launch {
                 val newTask =
