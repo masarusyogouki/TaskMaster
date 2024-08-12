@@ -1,6 +1,7 @@
 package com.example.taskmaster.model.data
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -27,4 +28,7 @@ interface TaskDao {
 
     @Update
     suspend fun updateTask(task: Task)
+
+    @Delete
+    suspend fun deleteTask(task: Task)
 }

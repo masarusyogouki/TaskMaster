@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -22,6 +24,7 @@ import com.example.taskmaster.model.Task
 fun TaskCard(
     task: Task,
     onCompletedChange: (Boolean) -> Unit,
+    onDeleteTask: (Task) -> Unit,
     onNavEditClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -60,6 +63,17 @@ fun TaskCard(
                     Modifier
                         .weight(1f)
                         .size(24.dp),
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "Delete",
+                modifier =
+                    Modifier
+                        .size(24.dp)
+                        .clickable { onDeleteTask(task) },
             )
         }
     }

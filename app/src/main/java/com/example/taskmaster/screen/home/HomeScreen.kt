@@ -31,6 +31,7 @@ fun HomeScreen(
         onAddClick = viewModel::addTask,
         onTitleChange = viewModel::onTitleChange,
         onUpdateCompleted = viewModel::onUpdateCompleted,
+        onDeleteTask = viewModel::onDeleteTask,
         onNavEditClick = onNavEditClick,
     )
 }
@@ -42,6 +43,7 @@ fun HomeScreenContent(
     onTitleChange: (String) -> Unit,
     onAddClick: (String) -> Unit,
     onUpdateCompleted: (Long, Boolean) -> Unit,
+    onDeleteTask: (Task) -> Unit,
     onNavEditClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -70,6 +72,9 @@ fun HomeScreenContent(
                             task = task,
                             onCompletedChange = { isCompleted ->
                                 onUpdateCompleted(task.id, isCompleted)
+                            },
+                            onDeleteTask = {
+                                onDeleteTask(task)
                             },
                             onNavEditClick = onNavEditClick,
                         )
