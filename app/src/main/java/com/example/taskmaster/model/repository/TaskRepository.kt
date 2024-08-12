@@ -1,6 +1,5 @@
 package com.example.taskmaster.model.repository
 
-import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
 import kotlinx.coroutines.flow.Flow
 
@@ -9,13 +8,12 @@ interface TaskRepository {
 
     fun getTasks(): Flow<List<Task>>
 
-    suspend fun updateTaskCompleted(
+    fun getTaskById(taskId: Long): Flow<Task?>
+
+    suspend fun updateCompleted(
         taskId: Long,
         isCompleted: Boolean,
     )
 
-    suspend fun updateTaskPriority(
-        taskId: Long,
-        priority: Priority,
-    )
+    suspend fun updateTask(task: Task)
 }

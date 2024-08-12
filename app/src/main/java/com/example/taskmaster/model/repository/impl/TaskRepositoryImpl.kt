@@ -1,6 +1,5 @@
 package com.example.taskmaster.model.repository.impl
 
-import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
 import com.example.taskmaster.model.data.TaskDao
 import com.example.taskmaster.model.repository.TaskRepository
@@ -16,13 +15,14 @@ class TaskRepositoryImpl
 
         override fun getTasks(): Flow<List<Task>> = taskDao.getALLTasks()
 
-        override suspend fun updateTaskCompleted(
+        override fun getTaskById(taskId: Long): Flow<Task?> = taskDao.getTaskById(taskId)
+
+        override suspend fun updateCompleted(
             taskId: Long,
             isCompleted: Boolean,
-        ) = taskDao.updateTaskCompleted(taskId, isCompleted)
+        ) {
+            taskDao.updateCompleted(taskId, isCompleted)
+        }
 
-        override suspend fun updateTaskPriority(
-            taskId: Long,
-            priority: Priority,
-        ) = taskDao.updateTaskPriority(taskId, priority)
+        override suspend fun updateTask(task: Task) = taskDao.updateTask(task)
     }

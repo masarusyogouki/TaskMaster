@@ -17,18 +17,21 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.taskmaster.common.composable.NewTaskField
 import com.example.taskmaster.common.composable.TaskCard
-import com.example.taskmaster.model.Priority
+import com.example.taskmaster.model.Task
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    onNavEditClick: (Task) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
     val uiState = viewModel.uiState.value
 
     HomeScreenContent(
         uiState = uiState,
         onAddClick = viewModel::addTask,
         onTitleChange = viewModel::onTitleChange,
-        onTaskCompletedChange = viewModel::onUpdateTaskCompleted,
-        onTaskPriorityChange = viewModel::onUpdateTaskPriority,
+        onUpdateCompleted = viewModel::onUpdateCompleted,
+        onNavEditClick = onNavEditClick,
     )
 }
 
@@ -38,8 +41,8 @@ fun HomeScreenContent(
     uiState: HomeUiState,
     onTitleChange: (String) -> Unit,
     onAddClick: (String) -> Unit,
-    onTaskCompletedChange: (Long, Boolean) -> Unit,
-    onTaskPriorityChange: (Long, Priority) -> Unit,
+    onUpdateCompleted: (Long, Boolean) -> Unit,
+    onNavEditClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -57,19 +60,18 @@ fun HomeScreenContent(
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(
-                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
                 ) {
                     items(uiState.tasks) { task ->
                         TaskCard(
-                            isCompleted = task.isCompleted,
-                            title = task.title,
-                            priority = task.priority,
+                            task = task,
                             onCompletedChange = { isCompleted ->
-                                onTaskCompletedChange(task.id, isCompleted)
+                                onUpdateCompleted(task.id, isCompleted)
                             },
-                            onPriorityChange = { priority ->
-                                onTaskPriorityChange(task.id, priority)
-                            },
+                            onNavEditClick = onNavEditClick,
                         )
                     }
                 }
