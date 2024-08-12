@@ -66,7 +66,7 @@ fun TaskCard(
 }
 
 @Composable
-fun EditCard(
+fun EditTitleCard(
     title: String,
     newValue: (String) -> Unit,
     isCompleted: Boolean,

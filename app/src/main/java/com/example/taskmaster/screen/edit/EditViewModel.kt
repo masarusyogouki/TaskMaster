@@ -9,6 +9,7 @@ import com.example.taskmaster.model.Task
 import com.example.taskmaster.model.repository.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,8 +32,19 @@ class EditViewModel
             task.value = task.value.copy(title = newValue)
         }
 
+        fun onDueDateChange(newValue: LocalDate?) {
+            task.value = task.value.copy(dueDate = newValue)
+        }
+
         fun onCompletedChange(newValue: Boolean) {
             task.value = task.value.copy(isCompleted = newValue)
+        }
+
+        fun updateTask() {
+            viewModelScope.launch {
+                taskRepository.updateTask(task.value)
+                Log.d("EditViewModel", "Task updated: $task")
+            }
         }
 
         fun getTaskById(taskId: Long) {

@@ -6,14 +6,30 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun NewTaskField(
@@ -56,5 +72,60 @@ fun BasicTextField(
         onValueChange = { newValue(it) },
         modifier = modifier,
         singleLine = true,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DatePickerField(
+    onDueDateChange: (LocalDate?) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val state = rememberDatePickerState()
+    var visible by remember { mutableStateOf(false) }
+
+    val selectedDate by remember {
+        derivedStateOf {
+            state.selectedDateMillis?.let { millis ->
+                val date = Date(millis)
+                SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(date)
+            } ?: "No date selected"
+        }
+    }
+
+    if (visible) {
+        DatePickerDialog(
+            onDismissRequest = { visible = false },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val selectedMillis = state.selectedDateMillis
+                        val localDate =
+                            selectedMillis?.let { millis ->
+                                Instant
+                                    .ofEpochMilli(millis)
+                                    .atZone(ZoneId.systemDefault())
+                                    .toLocalDate()
+                            }
+                        onDueDateChange(localDate)
+                        visible = false
+                    },
+                ) {
+                    Text(text = "OK")
+                }
+            },
+        ) {
+            DatePicker(state = state)
+        }
+    }
+
+    Text(
+        text =
+            if (selectedDate == "No date selected") {
+                "期限日を追加"
+            } else {
+                selectedDate
+            },
+        modifier = modifier.clickable { visible = true },
     )
 }

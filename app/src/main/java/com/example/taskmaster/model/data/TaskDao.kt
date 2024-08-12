@@ -4,10 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.taskmaster.model.Priority
+import androidx.room.Update
 import com.example.taskmaster.model.Task
 import kotlinx.coroutines.flow.Flow
-import java.time.LocalDate
 
 @Dao
 interface TaskDao {
@@ -26,19 +25,6 @@ interface TaskDao {
         isCompleted: Boolean,
     )
 
-    @Query(
-        "UPDATE tasks " +
-            "SET title = :title," +
-            "dueDate = :dueDate," +
-            "priority = :priority," +
-            "isCompleted = :isCompleted " +
-            " WHERE id = :taskId",
-    )
-    suspend fun updateTask(
-        taskId: Long,
-        title: String,
-        dueDate: LocalDate,
-        priority: Priority,
-        isCompleted: Boolean,
-    )
+    @Update
+    suspend fun updateTask(task: Task)
 }
