@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.taskmaster.common.composable.NewTaskField
 import com.example.taskmaster.common.composable.TaskCard
-import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
 
 @Composable
@@ -31,8 +30,7 @@ fun HomeScreen(
         uiState = uiState,
         onAddClick = viewModel::addTask,
         onTitleChange = viewModel::onTitleChange,
-        onTaskCompletedChange = viewModel::onUpdateTaskCompleted,
-        onTaskPriorityChange = viewModel::onUpdateTaskPriority,
+        onUpdateCompleted = viewModel::onUpdateCompleted,
         onNavEditClick = onNavEditClick,
     )
 }
@@ -43,8 +41,7 @@ fun HomeScreenContent(
     uiState: HomeUiState,
     onTitleChange: (String) -> Unit,
     onAddClick: (String) -> Unit,
-    onTaskCompletedChange: (Long, Boolean) -> Unit,
-    onTaskPriorityChange: (Long, Priority) -> Unit,
+    onUpdateCompleted: (Long, Boolean) -> Unit,
     onNavEditClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -72,10 +69,7 @@ fun HomeScreenContent(
                         TaskCard(
                             task = task,
                             onCompletedChange = { isCompleted ->
-                                onTaskCompletedChange(task.id, isCompleted)
-                            },
-                            onPriorityChange = { priority ->
-                                onTaskPriorityChange(task.id, priority)
+                                onUpdateCompleted(task.id, isCompleted)
                             },
                             onNavEditClick = onNavEditClick,
                         )

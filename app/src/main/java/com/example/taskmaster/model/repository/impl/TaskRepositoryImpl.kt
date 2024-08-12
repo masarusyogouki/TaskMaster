@@ -19,23 +19,18 @@ class TaskRepositoryImpl
 
         override fun getTaskById(taskId: Long): Flow<Task?> = taskDao.getTaskById(taskId)
 
-        override suspend fun updateTaskTitle(
-            taskId: Long,
-            title: String,
-        ) = taskDao.updateTaskTitle(taskId, title)
-
-        override suspend fun updateTaskDueDate(
-            taskId: Long,
-            dueDate: LocalDate,
-        ) = taskDao.updateTaskDueDate(taskId, dueDate)
-
-        override suspend fun updateTaskPriority(
-            taskId: Long,
-            priority: Priority,
-        ) = taskDao.updateTaskPriority(taskId, priority)
-
-        override suspend fun updateTaskCompleted(
+        override suspend fun updateCompleted(
             taskId: Long,
             isCompleted: Boolean,
-        ) = taskDao.updateTaskCompleted(taskId, isCompleted)
+        ) {
+            taskDao.updateCompleted(taskId, isCompleted)
+        }
+
+        override suspend fun updateTask(
+            taskId: Long,
+            title: String,
+            dueDate: LocalDate,
+            priority: Priority,
+            isCompleted: Boolean,
+        ) = taskDao.updateTask(taskId, title, dueDate, priority, isCompleted)
     }

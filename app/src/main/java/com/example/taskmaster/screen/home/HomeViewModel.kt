@@ -28,23 +28,13 @@ class HomeViewModel
             uiState.value = uiState.value.copy(title = newValue)
         }
 
-        fun onUpdateTaskCompleted(
+        fun onUpdateCompleted(
             taskId: Long,
             isCompleted: Boolean,
         ) {
             viewModelScope.launch {
-                taskRepository.updateTaskCompleted(taskId, isCompleted)
+                taskRepository.updateCompleted(taskId, isCompleted)
                 Log.d("HomeViewModel", "Task updated: $taskId, $isCompleted")
-            }
-        }
-
-        fun onUpdateTaskPriority(
-            taskId: Long,
-            priority: Priority,
-        ) {
-            viewModelScope.launch {
-                taskRepository.updateTaskPriority(taskId, priority)
-                Log.d("HomeViewModel", "Task updated: $taskId, $priority")
             }
         }
 

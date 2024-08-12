@@ -1,13 +1,13 @@
 package com.example.taskmaster.screen.edit
 
+import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
 import com.example.taskmaster.model.repository.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,13 +17,31 @@ class EditViewModel
     constructor(
         private val taskRepository: TaskRepository,
     ) : ViewModel() {
-        private val _task = MutableStateFlow<Task?>(null)
-        val task: StateFlow<Task?> = _task.asStateFlow()
+        val task =
+            mutableStateOf(
+                Task(
+                    title = "",
+                    dueDate = null,
+                    priority = Priority.None,
+                    isCompleted = false,
+                ),
+            )
 
-        fun loadTask(taskId: Long) {
+        fun onTitleChange(newValue: String) {
+            task.value = task.value.copy(title = newValue)
+        }
+
+        fun onCompletedChange(newValue: Boolean) {
+            task.value = task.value.copy(isCompleted = newValue)
+        }
+
+        fun getTaskById(taskId: Long) {
             viewModelScope.launch {
-                taskRepository.getTaskById(taskId).collect { task ->
-                    _task.value = task
+                taskRepository.getTaskById(taskId).collect { taskDetail ->
+                    if (taskDetail != null) {
+                        task.value = taskDetail
+                        Log.d("EditViewModel", "Task loaded: $taskDetail")
+                    }
                 }
             }
         }

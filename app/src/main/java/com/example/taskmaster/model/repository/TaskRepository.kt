@@ -12,23 +12,16 @@ interface TaskRepository {
 
     fun getTaskById(taskId: Long): Flow<Task?>
 
-    suspend fun updateTaskTitle(
+    suspend fun updateCompleted(
+        taskId: Long,
+        isCompleted: Boolean,
+    )
+
+    suspend fun updateTask(
         taskId: Long,
         title: String,
-    )
-
-    suspend fun updateTaskDueDate(
-        taskId: Long,
         dueDate: LocalDate,
-    )
-
-    suspend fun updateTaskPriority(
-        taskId: Long,
         priority: Priority,
-    )
-
-    suspend fun updateTaskCompleted(
-        taskId: Long,
         isCompleted: Boolean,
     )
 }
