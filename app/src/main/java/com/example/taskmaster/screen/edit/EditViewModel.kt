@@ -36,6 +36,10 @@ class EditViewModel
             task.value = task.value.copy(dueDate = newValue)
         }
 
+        fun onPriorityChange(newValue: Priority) {
+            task.value = task.value.copy(priority = newValue)
+        }
+
         fun onCompletedChange(newValue: Boolean) {
             task.value = task.value.copy(isCompleted = newValue)
         }

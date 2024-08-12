@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.taskmaster.common.composable.DatePickerField
 import com.example.taskmaster.common.composable.EditTitleCard
+import com.example.taskmaster.common.composable.PriorityField
+import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
 import java.time.LocalDate
 
@@ -28,6 +30,7 @@ fun EditScreen(
         onTitleChange = viewModel::onTitleChange,
         onCompletedChange = viewModel::onCompletedChange,
         onDueDateChange = viewModel::onDueDateChange,
+        onPriorityChange = viewModel::onPriorityChange,
         onUpdateTask = viewModel::updateTask,
     )
 }
@@ -38,6 +41,7 @@ fun EditScreenContent(
     onTitleChange: (String) -> Unit,
     onCompletedChange: (Boolean) -> Unit,
     onDueDateChange: (LocalDate?) -> Unit,
+    onPriorityChange: (Priority) -> Unit,
     onUpdateTask: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -50,16 +54,16 @@ fun EditScreenContent(
                 onCompletedChange = onCompletedChange,
                 modifier = modifier,
             )
-        }
-        DatePickerField(
-            onDueDateChange = onDueDateChange,
-        )
 
-        Text(text = "${task?.id}")
-        Text(text = "${task?.title}")
-        Text(text = "${task?.isCompleted}")
-        Text(text = "${task?.dueDate}")
-        Text(text = "${task?.priority}")
+            DatePickerField(
+                onDueDateChange = onDueDateChange,
+            )
+
+            PriorityField(
+                currentPriority = taskDetail.priority,
+                onPriorityChange = onPriorityChange,
+            )
+        }
 
         Button(onClick = onUpdateTask) {
             Text(text = "更新")
