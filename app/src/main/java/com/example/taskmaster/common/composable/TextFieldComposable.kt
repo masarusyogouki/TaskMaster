@@ -1,10 +1,11 @@
 package com.example.taskmaster.common.composable
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
@@ -12,10 +13,10 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -24,9 +25,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.model.Priority
+import com.example.taskmaster.ui.theme.DarkGray
+import com.example.taskmaster.ui.theme.MilkyWhite
+import com.example.taskmaster.ui.theme.PaleBlue
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDate
@@ -41,26 +44,40 @@ fun NewTaskField(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    OutlinedTextField(
+    TextField(
         singleLine = true,
         modifier =
             modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .background(Color.White),
+                .padding(8.dp)
+                .height(48.dp)
+                .fillMaxWidth(),
         value = value,
         onValueChange = { onNewValue(it) },
-        placeholder = { Text(text = "新しいタスクを追加") },
+        placeholder = {
+            Text(
+                text = "新しいタスクを追加",
+                color = DarkGray,
+            )
+        },
         trailingIcon = {
             if (value.isNotEmpty()) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "追加",
                     modifier = Modifier.clickable { onClick() },
-                    tint = Color.Blue,
+                    tint = PaleBlue,
                 )
             }
         },
+        colors =
+            TextFieldDefaults.colors(
+                focusedContainerColor = MilkyWhite,
+                unfocusedContainerColor = MilkyWhite,
+                disabledContainerColor = MilkyWhite,
+                focusedIndicatorColor = MilkyWhite,
+                unfocusedIndicatorColor = MilkyWhite,
+            ),
+        shape = RoundedCornerShape(20.dp),
     )
 }
 
@@ -148,7 +165,7 @@ fun PriorityField(
             title = { Text(text = "Select Priority") },
             text = {
                 Column {
-                    Priority.values().forEach { priority ->
+                    Priority.entries.forEach { priority ->
                         Text(
                             text = priority.name,
                             modifier =
