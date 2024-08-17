@@ -54,6 +54,7 @@ fun EditScreenContent(
                 onCompletedChange = onCompletedChange,
                 modifier = modifier,
             )
+            Text(text = "期限日: ${taskDetail.dueDate}")
 
             DatePickerField(
                 onDueDateChange = onDueDateChange,

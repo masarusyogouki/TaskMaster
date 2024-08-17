@@ -49,7 +49,7 @@ fun NewTaskField(
         modifier =
             modifier
                 .padding(8.dp)
-                .height(48.dp)
+                .height(60.dp)
                 .fillMaxWidth(),
         value = value,
         onValueChange = { onNewValue(it) },
