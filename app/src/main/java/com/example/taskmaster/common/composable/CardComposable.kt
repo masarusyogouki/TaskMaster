@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,9 +33,11 @@ import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
 import com.example.taskmaster.ui.theme.Blue
 import com.example.taskmaster.ui.theme.Gray
+import com.example.taskmaster.ui.theme.MilkyWhite
 import com.example.taskmaster.ui.theme.PaleBlue
 import com.example.taskmaster.ui.theme.Red
 import com.example.taskmaster.ui.theme.Yellow
+import java.time.LocalDate
 
 @Composable
 fun TaskCard(
@@ -154,6 +157,11 @@ fun EditTitleCard(
             modifier
                 .fillMaxWidth()
                 .padding(2.dp),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MilkyWhite,
+                contentColor = Color.Black,
+            ),
     ) {
         Row(
             modifier =
@@ -174,12 +182,50 @@ fun EditTitleCard(
                     Modifier
                         .size(32.dp)
                         .clickable { onCompletedChange(!isCompleted) },
+                tint = if (isCompleted) PaleBlue else Color.Black,
             )
             BasicTextField(
                 value = title,
                 newValue = { newValue(it) },
                 modifier = Modifier.weight(1f),
             )
+        }
+    }
+}
+
+@Composable
+fun EditDialogCard(
+    task: Task?,
+    onDueDateChange: (LocalDate?) -> Unit,
+    onPriorityChange: (Priority) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier =
+            modifier
+                .fillMaxWidth(),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MilkyWhite,
+                contentColor = Color.Black,
+            ),
+    ) {
+        Column {
+            task?.let { taskDetail ->
+                DatePickerDialog(
+                    dueDate = taskDetail.dueDate,
+                    onDueDateChange = onDueDateChange,
+                )
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    thickness = 2.dp,
+                    color = Color.Gray,
+                )
+                PriorityDialog(
+                    currentPriority = taskDetail.priority,
+                    onPriorityChange = onPriorityChange,
+                )
+            }
         }
     }
 }

@@ -46,7 +46,10 @@ fun TodoNavGraph(
             ) { backStackEntry ->
                 val taskId = backStackEntry.arguments?.getLong("taskId")
                 requireNotNull(taskId) { "Task ID is required" }
-                EditScreen(taskId)
+                EditScreen(
+                    taskId = taskId,
+                    navController = navController,
+                )
             }
         }
     }
