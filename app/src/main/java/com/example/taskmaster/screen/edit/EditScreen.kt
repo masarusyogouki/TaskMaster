@@ -125,5 +125,5 @@ private fun EditScreenPreview() {
         onDueDateChange = {},
         onPriorityChange = {},
         onUpdateTask = {},
-        )
+    )
 }
