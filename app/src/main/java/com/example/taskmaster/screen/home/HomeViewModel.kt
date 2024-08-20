@@ -51,7 +51,7 @@ class HomeViewModel
                     Task(
                         title = title,
                         dueDate = null,
-                        priority = Priority.None,
+                        priority = Priority.NONE,
                         isCompleted = false,
                     )
                 taskRepository.addTask(newTask)

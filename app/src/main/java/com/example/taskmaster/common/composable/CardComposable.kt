@@ -106,7 +106,7 @@ fun TaskCard(
                                 Priority.LOW -> Blue
                                 Priority.MEDIUM -> Yellow
                                 Priority.HIGH -> Red
-                                Priority.None -> Gray
+                                Priority.NONE -> Gray
                             },
                             shape = RoundedCornerShape(20.dp),
                         ),
@@ -119,7 +119,7 @@ fun TaskCard(
                             Priority.LOW -> "Low"
                             Priority.MEDIUM -> "Medium"
                             Priority.HIGH -> "High"
-                            Priority.None -> "None"
+                            Priority.NONE -> "None"
                         },
                     style =
                         TextStyle(

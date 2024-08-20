@@ -23,7 +23,7 @@ class EditViewModel
                 Task(
                     title = "",
                     dueDate = null,
-                    priority = Priority.None,
+                    priority = Priority.NONE,
                     isCompleted = false,
                 ),
             )
