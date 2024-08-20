@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.taskmaster.common.composable.NewTaskField
 import com.example.taskmaster.common.composable.TaskCard
@@ -48,16 +51,22 @@ fun HomeScreenContent(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Home Screen") },
-            )
+            Column {
+                TopAppBar(
+                    title = { Text("Home Screen") },
+                )
+                HorizontalDivider(thickness = 1.dp, color = Color.Black)
+            }
         },
         bottomBar = {
-            NewTaskField(
-                value = uiState.title,
-                onNewValue = onTitleChange,
-                onClick = { onAddClick(uiState.title) },
-            )
+            Column {
+                HorizontalDivider(thickness = 1.dp, color = Color.Black)
+                NewTaskField(
+                    value = uiState.title,
+                    onNewValue = onTitleChange,
+                    onClick = { onAddClick(uiState.title) },
+                )
+            }
         },
     ) { innerPadding ->
         Box(
