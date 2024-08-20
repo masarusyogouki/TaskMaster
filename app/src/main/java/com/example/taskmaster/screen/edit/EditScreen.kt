@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -78,7 +80,7 @@ fun EditScreenContent(
             }
         },
     ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
+        Column(modifier = modifier.padding(innerPadding)) {
             task?.let { taskDetail ->
                 EditTitleCard(
                     title = taskDetail.title,
@@ -101,4 +103,27 @@ fun EditScreenContent(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun EditScreenPreview() {
+    val task =
+        Task(
+            id = 1,
+            title = "Sample Task",
+            dueDate = null,
+            priority = Priority.HIGH,
+            isCompleted = false,
+        )
+
+    EditScreenContent(
+        task = task,
+        navController = NavController(LocalContext.current),
+        onTitleChange = {},
+        onCompletedChange = {},
+        onDueDateChange = {},
+        onPriorityChange = {},
+        onUpdateTask = {},
+    )
 }

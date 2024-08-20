@@ -15,10 +15,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.taskmaster.common.composable.NewTaskField
 import com.example.taskmaster.common.composable.TaskCard
+import com.example.taskmaster.model.Priority
 import com.example.taskmaster.model.Task
 
 @Composable
@@ -98,4 +100,35 @@ fun HomeScreenContent(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HomeScreenPreview() {
+    val tasks =
+        listOf(
+            Task(
+                id = 1,
+                title = "Sample Task",
+                dueDate = null,
+                priority = Priority.HIGH,
+                isCompleted = false,
+            ),
+            Task(
+                id = 2,
+                title = "Sample Task2",
+                dueDate = null,
+                priority = Priority.HIGH,
+                isCompleted = false,
+            ),
+        )
+
+    HomeScreenContent(
+        uiState = HomeUiState(tasks = tasks),
+        onAddClick = {},
+        onTitleChange = {},
+        onUpdateCompleted = { _, _ -> },
+        onDeleteTask = {},
+        onNavEditClick = {},
+    )
 }
