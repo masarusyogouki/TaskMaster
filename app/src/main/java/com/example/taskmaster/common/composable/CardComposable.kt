@@ -150,6 +150,7 @@ fun EditTitleCard(
     newValue: (String) -> Unit,
     isCompleted: Boolean,
     onCompletedChange: (Boolean) -> Unit,
+    updateTitle: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -187,6 +188,7 @@ fun EditTitleCard(
             BasicTextField(
                 value = title,
                 newValue = { newValue(it) },
+                onDone = { updateTitle(title) },
                 modifier = Modifier.weight(1f),
             )
         }

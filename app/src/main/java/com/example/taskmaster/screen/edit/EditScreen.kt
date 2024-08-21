@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -46,7 +45,7 @@ fun EditScreen(
         onCompletedChange = viewModel::onCompletedChange,
         onDueDateChange = viewModel::onDueDateChange,
         onPriorityChange = viewModel::onPriorityChange,
-        onUpdateTask = viewModel::updateTask,
+        updateTitle = viewModel::updateTitle,
     )
 }
 
@@ -59,7 +58,7 @@ fun EditScreenContent(
     onCompletedChange: (Boolean) -> Unit,
     onDueDateChange: (LocalDate?) -> Unit,
     onPriorityChange: (Priority) -> Unit,
-    onUpdateTask: () -> Unit,
+    updateTitle: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -87,6 +86,7 @@ fun EditScreenContent(
                     newValue = onTitleChange,
                     isCompleted = taskDetail.isCompleted,
                     onCompletedChange = onCompletedChange,
+                    updateTitle = updateTitle,
                     modifier = Modifier.padding(8.dp),
                 )
 
@@ -96,10 +96,6 @@ fun EditScreenContent(
                     onPriorityChange = onPriorityChange,
                     modifier = Modifier.padding(8.dp),
                 )
-            }
-
-            Button(onClick = onUpdateTask) {
-                Text(text = "更新")
             }
         }
     }
@@ -124,6 +120,6 @@ private fun EditScreenPreview() {
         onCompletedChange = {},
         onDueDateChange = {},
         onPriorityChange = {},
-        onUpdateTask = {},
+        updateTitle = {},
     )
 }
