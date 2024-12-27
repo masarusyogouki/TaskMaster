@@ -8,13 +8,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
-    private val authRepository: AuthRepository
-) : ViewModel() {
-    fun onLogOutClick(onNavHomeClick: (String) -> Unit) {
-        viewModelScope.launch {
-            authRepository.logOut()
-            onNavHomeClick("home")
+class ProfileViewModel
+    @Inject
+    constructor(
+        private val authRepository: AuthRepository,
+    ) : ViewModel() {
+        fun onLogOutClick(onNavHomeClick: (String) -> Unit) {
+            viewModelScope.launch {
+                authRepository.logOut()
+                onNavHomeClick("home")
+            }
         }
     }
-}
