@@ -9,4 +9,8 @@ class TodoNavigationActions(
     fun navigateToEditScreen(task: Task) {
         navController.navigate("${Destinations.EDIT_SCREEN}/${task.id}")
     }
+
+    fun navigate(destination: String) {
+        navController.navigate(destination)
+    }
 }
