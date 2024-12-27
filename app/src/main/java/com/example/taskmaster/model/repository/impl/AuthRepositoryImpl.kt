@@ -10,44 +10,52 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(
-    private val auth: FirebaseAuth
-) : AuthRepository {
+class AuthRepositoryImpl
+    @Inject
+    constructor(
+        private val auth: FirebaseAuth,
+    ) : AuthRepository {
+        override val currentUserId: String
+            get() = auth.currentUser?.uid.orEmpty()
 
-    override val currentUserId: String
-        get() = auth.currentUser?.uid.orEmpty()
+        override val hasUser: Boolean
+            get() = auth.currentUser != null
 
-    override val hasUser: Boolean
-        get() = auth.currentUser != null
-
-    override val currentUser: Flow<User>
-        get() = callbackFlow {
-            val listener =
-                FirebaseAuth.AuthStateListener { auth ->
-                    this.trySend(auth.currentUser?.let { User(it.uid)} ?: User())
+        override val currentUser: Flow<User>
+            get() =
+                callbackFlow {
+                    val listener =
+                        FirebaseAuth.AuthStateListener { auth ->
+                            this.trySend(auth.currentUser?.let { User(it.uid) } ?: User())
+                        }
+                    auth.addAuthStateListener(listener)
+                    awaitClose { auth.removeAuthStateListener(listener) }
                 }
-            auth.addAuthStateListener(listener)
-            awaitClose { auth.removeAuthStateListener(listener) }
+
+        override suspend fun register(
+            email: String,
+            password: String,
+        ) {
+            if (hasUser) {
+                val credential = EmailAuthProvider.getCredential(email, password)
+                auth.currentUser?.linkWithCredential(credential)?.await()
+            } else {
+                auth.createUserWithEmailAndPassword(email, password).await()
+            }
         }
 
-    override suspend fun register(email: String, password: String) {
-        if (hasUser) {
-            val credential = EmailAuthProvider.getCredential(email, password)
-            auth.currentUser?.linkWithCredential(credential)?.await()
-        } else {
-            auth.createUserWithEmailAndPassword(email, password).await()
+        override suspend fun signIn(
+            email: String,
+            password: String,
+        ) {
+            auth.signInWithEmailAndPassword(email, password).await()
+        }
+
+        override suspend fun logOut() {
+            auth.signOut()
+        }
+
+        override suspend fun sendRecoveryEmail(email: String) {
+            auth.sendPasswordResetEmail(email).await()
         }
     }
-
-    override suspend fun signIn(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password).await()
-    }
-
-    override suspend fun logOut() {
-        auth.signOut()
-    }
-
-    override suspend fun sendRecoveryEmail(email: String) {
-        auth.sendPasswordResetEmail(email).await()
-    }
-}

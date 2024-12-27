@@ -9,8 +9,17 @@ interface AuthRepository {
 
     val currentUser: Flow<User>
 
-    suspend fun register(email: String, password: String)
-    suspend fun signIn(email: String, password: String)
+    suspend fun register(
+        email: String,
+        password: String,
+    )
+
+    suspend fun signIn(
+        email: String,
+        password: String,
+    )
+
     suspend fun logOut()
+
     suspend fun sendRecoveryEmail(email: String)
 }

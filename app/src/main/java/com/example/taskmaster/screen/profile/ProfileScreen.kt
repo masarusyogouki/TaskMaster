@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,11 +29,11 @@ import com.example.taskmaster.common.composable.BasicButton
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
-    onNavHomeClick: (String) -> Unit
+    onNavHomeClick: (String) -> Unit,
 ) {
     ProfileScreenContent(
         onNavHomeClick = onNavHomeClick,
-        onLogOutClick = { viewModel.onLogOutClick(onNavHomeClick)}
+        onLogOutClick = { viewModel.onLogOutClick(onNavHomeClick) },
     )
 }
 
@@ -42,27 +42,28 @@ fun ProfileScreen(
 fun ProfileScreenContent(
     onNavHomeClick: (String) -> Unit,
     onLogOutClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
-        topBar ={
+        topBar = {
             CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
+                colors =
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                    ),
                 title = {
                     Text(
                         "プロフィール",
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = { onNavHomeClick("home") }) {
                         Icon(
-                            imageVector = Icons.Default.KeyboardArrowLeft,
-                            contentDescription = "backHome"
+                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                            contentDescription = "backHome",
                         )
                     }
                 },
@@ -73,18 +74,19 @@ fun ProfileScreenContent(
                 text = "logout",
                 fontColor = Color.White,
                 backgroundColor = Color.Blue,
-                action = onLogOutClick
+                action = onLogOutClick,
             )
-        }
+        },
     ) { innerPadding ->
         Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .verticalScroll(rememberScrollState())
-                .padding(innerPadding),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
+                    .padding(innerPadding),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text("あなたの名前")
         }
@@ -96,6 +98,6 @@ fun ProfileScreenContent(
 private fun ProfileScreenPreview() {
     ProfileScreenContent(
         onNavHomeClick = {},
-        onLogOutClick = {}
+        onLogOutClick = {},
     )
 }
