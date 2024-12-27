@@ -36,7 +36,6 @@ import com.example.taskmaster.ui.theme.DarkGray
 import com.example.taskmaster.ui.theme.MilkyWhite
 import com.example.taskmaster.ui.theme.PaleBlue
 
-
 @Composable
 fun NewTaskField(
     value: String,
@@ -47,10 +46,10 @@ fun NewTaskField(
     TextField(
         singleLine = true,
         modifier =
-        modifier
-            .padding(8.dp)
-            .height(60.dp)
-            .fillMaxWidth(),
+            modifier
+                .padding(8.dp)
+                .height(60.dp)
+                .fillMaxWidth(),
         value = value,
         onValueChange = { onNewValue(it) },
         placeholder = {
@@ -117,20 +116,24 @@ fun BasicTextField(
 fun EmailTextField(
     value: String,
     onNewValue: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         singleLine = true,
         modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = { onNewValue(it) },
-        placeholder = { Text("メールアドレスを入力してください")},
-        leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email")}
+        placeholder = { Text("メールアドレスを入力してください") },
+        leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") },
     )
 }
 
 @Composable
-fun PasswordTextField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
+fun PasswordTextField(
+    value: String,
+    onNewValue: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     PasswordField(value, onNewValue, modifier)
 }
 
@@ -138,7 +141,7 @@ fun PasswordTextField(value: String, onNewValue: (String) -> Unit, modifier: Mod
 fun RepeatPasswordTextField(
     value: String,
     onNewValue: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     PasswordField(value, onNewValue, modifier)
 }
@@ -147,13 +150,16 @@ fun RepeatPasswordTextField(
 fun PasswordField(
     value: String,
     onNewValue: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var isVisible by remember { mutableStateOf(false) }
 
     val icon =
-        if (isVisible) painterResource(R.drawable.ic_visibility_on)
-        else painterResource(R.drawable.ic_visibility_off)
+        if (isVisible) {
+            painterResource(R.drawable.ic_visibility_on)
+        } else {
+            painterResource(R.drawable.ic_visibility_off)
+        }
 
     val visualTransformation =
         if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
@@ -162,14 +168,14 @@ fun PasswordField(
         modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = { onNewValue(it) },
-        placeholder = { Text("パスワードを入力してください")},
-        leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock")},
+        placeholder = { Text("パスワードを入力してください") },
+        leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock") },
         trailingIcon = {
-            IconButton(onClick = { isVisible = !isVisible}) {
+            IconButton(onClick = { isVisible = !isVisible }) {
                 Icon(painter = icon, contentDescription = "Visibility")
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        visualTransformation = visualTransformation
+        visualTransformation = visualTransformation,
     )
 }

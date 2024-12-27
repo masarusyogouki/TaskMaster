@@ -65,15 +65,16 @@ fun HomeScreenContent(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
+                colors =
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                    ),
                 title = {
                     Text(
                         "ホーム",
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 actions = {
@@ -86,7 +87,7 @@ fun HomeScreenContent(
                     }) {
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
-                            contentDescription = "makeAccount"
+                            contentDescription = "makeAccount",
                         )
                     }
                 },

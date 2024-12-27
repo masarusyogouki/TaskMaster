@@ -33,7 +33,7 @@ import com.example.taskmaster.common.composable.RepeatPasswordTextField
 @Composable
 fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    onNavHomeClick: (String) -> Unit
+    onNavHomeClick: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState
 
@@ -43,8 +43,8 @@ fun AuthScreen(
             onEmailChange = viewModel::onEmailChange,
             onPasswordChange = viewModel::onPasswordChange,
             onRepeatPasswordChange = viewModel::onRepeatPasswordChange,
-            onSwitchState = { viewModel.switchState()},
-            onSignUpClick = { viewModel.onSignUpClick(onNavHomeClick)},
+            onSwitchState = { viewModel.switchState() },
+            onSignUpClick = { viewModel.onSignUpClick(onNavHomeClick) },
             onNavHomeClick = onNavHomeClick,
         )
     } else {
@@ -52,9 +52,9 @@ fun AuthScreen(
             uiState = uiState,
             onEmailChange = viewModel::onEmailChange,
             onPasswordChange = viewModel::onPasswordChange,
-            onSwitchState = { viewModel.switchState()},
-            onLoginClick = { viewModel.onLoginClick(onNavHomeClick)},
-            onNavHomeClick = onNavHomeClick
+            onSwitchState = { viewModel.switchState() },
+            onLoginClick = { viewModel.onLoginClick(onNavHomeClick) },
+            onNavHomeClick = onNavHomeClick,
         )
     }
 }
@@ -69,65 +69,67 @@ fun SignUpScreenContent(
     onSwitchState: () -> Unit,
     onSignUpClick: () -> Unit,
     onNavHomeClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
+                colors =
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                    ),
                 title = {
                     Text(
                         "新規登録",
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = { onNavHomeClick("home") }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
-                            contentDescription = "backHome"
+                            contentDescription = "backHome",
                         )
                     }
-                }
+                },
             )
-        }
+        },
     ) { innerPadding ->
         Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .verticalScroll(rememberScrollState())
-                .padding(innerPadding),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
+                    .padding(innerPadding),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             EmailTextField(
                 value = uiState.email,
-                onNewValue = onEmailChange
+                onNewValue = onEmailChange,
             )
             PasswordTextField(
                 value = uiState.password,
-                onNewValue = onPasswordChange
+                onNewValue = onPasswordChange,
             )
             RepeatPasswordTextField(
                 value = uiState.repeatPassword,
-                onNewValue = onRepeatPasswordChange
+                onNewValue = onRepeatPasswordChange,
             )
             BasicButton(
                 text = "Sign Up",
                 fontColor = Color.White,
                 backgroundColor = Color.Blue,
-                action = onSignUpClick
+                action = onSignUpClick,
             )
             BasicButton(
                 text = "アカウントをお持ちの方はこちら",
                 fontColor = Color.Blue,
                 backgroundColor = Color.Transparent,
-                action = onSwitchState
+                action = onSwitchState,
             )
         }
     }
@@ -142,61 +144,63 @@ fun LoginScreenContent(
     onSwitchState: () -> Unit,
     onLoginClick: () -> Unit,
     onNavHomeClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
+                colors =
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                    ),
                 title = {
                     Text(
                         "ログイン",
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = { onNavHomeClick("home") }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
-                            contentDescription = "backHome"
+                            contentDescription = "backHome",
                         )
                     }
-                }
+                },
             )
-        }
+        },
     ) { innerPadding ->
         Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .verticalScroll(rememberScrollState())
-                .padding(innerPadding),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
+                    .padding(innerPadding),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             EmailTextField(
                 value = uiState.email,
-                onNewValue = onEmailChange
+                onNewValue = onEmailChange,
             )
             PasswordTextField(
                 value = uiState.password,
-                onNewValue = onPasswordChange
+                onNewValue = onPasswordChange,
             )
             BasicButton(
                 text = "Login",
                 fontColor = Color.White,
                 backgroundColor = Color.Blue,
-                action = onLoginClick
+                action = onLoginClick,
             )
             BasicButton(
                 text = "アカウントを持っていない方はこちら",
                 fontColor = Color.Blue,
                 backgroundColor = Color.Transparent,
-                action = onSwitchState
+                action = onSwitchState,
             )
         }
     }
@@ -206,18 +210,19 @@ fun LoginScreenContent(
 @Composable
 private fun SignUpScreenPreview() {
     SignUpScreenContent(
-        uiState = AuthUiState(
-            email = "test@example.com",
-            password = "password123",
-            repeatPassword = "password123",
-            isSignUp = true
-        ),
+        uiState =
+            AuthUiState(
+                email = "test@example.com",
+                password = "password123",
+                repeatPassword = "password123",
+                isSignUp = true,
+            ),
         onEmailChange = {},
         onPasswordChange = {},
         onRepeatPasswordChange = {},
         onSwitchState = {},
         onSignUpClick = {},
-        onNavHomeClick = {}
+        onNavHomeClick = {},
     )
 }
 
@@ -225,12 +230,13 @@ private fun SignUpScreenPreview() {
 @Composable
 private fun LoginScreenPreview() {
     LoginScreenContent(
-        uiState = AuthUiState(
-            email = "test@example.com",
-            password = "password123",
-            repeatPassword = "password123",
-            isSignUp = false
-        ),
+        uiState =
+            AuthUiState(
+                email = "test@example.com",
+                password = "password123",
+                repeatPassword = "password123",
+                isSignUp = false,
+            ),
         onEmailChange = {},
         onPasswordChange = {},
         onSwitchState = {},

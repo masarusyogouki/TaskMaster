@@ -16,20 +16,22 @@ fun BasicButton(
     fontColor: Color,
     backgroundColor: Color,
     action: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Button(
         onClick = action,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(
-                vertical = 10.dp,
-                horizontal = 24.dp
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(
+                    vertical = 10.dp,
+                    horizontal = 24.dp,
+                ),
+        colors =
+            ButtonDefaults.buttonColors(
+                contentColor = fontColor,
+                containerColor = backgroundColor,
             ),
-        colors = ButtonDefaults.buttonColors(
-            contentColor = fontColor,
-            containerColor = backgroundColor
-        )
     ) {
         Text(text = text)
     }
